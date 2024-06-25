@@ -1,7 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-    fetchData();
-});
-
 async function fetchData() {
     const response = await fetch('Data.csv');
     const data = await response.text();
@@ -113,3 +109,7 @@ function createBarChart(canvasId, labels, data, chartTitle, xAxisLabel, yAxisLab
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetchData();
+});
