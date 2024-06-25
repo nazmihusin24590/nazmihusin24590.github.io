@@ -1,78 +1,64 @@
-// URL of the CSV file on GitHub
-const fetchData = async () => {
-    try {
-        const response = await fetch('Data.csv');
-        const data = await response.text();
-        console.log(data); // Display data in the console or process it further
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-};
+document.addEventListener('DOMContentLoaded', function () {
+    fetchData();
+});
 
-
-// Function to fetch the CSV file and process the data
 async function fetchData() {
+    // Get the current script's URL
+    const scriptUrl = document.currentScript.src;
+    
+    // Extract the directory path from the script's URL
+    const scriptPath = scriptUrl.substring(0, scriptUrl.lastIndexOf('/')) + '/';
+    
+    // Construct the URL to fetch Data.csv
+    const csvUrl = scriptPath + 'Data.csv';
+
     try {
         const response = await fetch(csvUrl);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const csvData = await response.text();
+        const data = await response.text();
         
-        // Process the CSV data
-        processData(csvData);
+        // Parse CSV data
+        const parsedData = parseCSVData(data);
+        
+        // Extract data arrays
+        const dates = parsedData.map(entry => entry.date);
+        const pHValues = parsedData.map(entry => parseFloat(entry.pH));
+        const CODValues = parsedData.map(entry => parseFloat(entry.COD));
+        const SSValues = parsedData.map(entry => parseFloat(entry.SS));
+        const dischargeValues = parsedData.map(entry => parseFloat(entry.volume_of_discharge));
+
+        // Create charts
+        createLineChart('dateVsPHChart', dates, pHValues, 'Date vs pH', 'Date', 'pH');
+        createLineChart('dateVsCODChart', dates, CODValues, 'Date vs COD', 'Date', 'COD');
+        createLineChart('dateVsSSChart', dates, SSValues, 'Date vs SS', 'Date', 'SS');
+        createBarChart('dateVsDischargeChart', dates, dischargeValues, 'Date vs Volume of Discharge', 'Date', 'Volume of Discharge (m3)');
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching or parsing data:', error);
     }
 }
 
-// Function to process the fetched CSV data
-function processData(csvData) {
-    // Parse CSV using a library or custom parsing logic
-    const rows = csvData.split('\n'); // Split CSV into rows
-    const headers = rows[0].split(',').map(header => header.trim()); // Extract headers
-    const data = rows.slice(1).map(row => {
-        const values = row.split(',').map(value => value.trim());
-        return {
-            date: values[0],
-            pH: parseFloat(values[1]),
-            COD: parseFloat(values[2]),
-            SS: parseFloat(values[3]),
-            volume: parseFloat(values[4])
-        };
+function parseCSVData(csvData) {
+    // Split CSV data into rows
+    const rows = csvData.trim().split(/\r?\n/);
+    if (rows.length < 2) return []; // If no data or only header row
+    
+    // Get headers from the first row
+    const headers = rows[0].split(',');
+
+    // Parse each subsequent row into an object
+    const parsedData = rows.slice(1).map(row => {
+        const values = row.split(',');
+        const entry = {};
+        headers.forEach((header, index) => {
+            entry[header.trim()] = values[index].trim();
+        });
+        return entry;
     });
 
-    // Display charts
-    displayCharts(data);
+    return parsedData;
 }
 
-// Function to display charts using Chart.js
-function displayCharts(data) {
-    // Extract data for charts
-    const dates = data.map(entry => entry.date);
-    const pHValues = data.map(entry => entry.pH);
-    const CODValues = data.map(entry => entry.COD);
-    const SSValues = data.map(entry => entry.SS);
-    const volumeValues = data.map(entry => entry.volume);
-
-    // Create date vs pH chart
-    createLineChart('Date vs pH', dates, pHValues, 'pH', 'rgba(75, 192, 192, 1)');
-
-    // Create date vs COD chart
-    createLineChart('Date vs COD', dates, CODValues, 'COD', 'rgba(255, 99, 132, 1)');
-
-    // Create date vs SS chart
-    createLineChart('Date vs SS', dates, SSValues, 'SS', 'rgba(54, 162, 235, 1)');
-
-    // Create date vs volume of discharge chart
-    createBarChart('Date vs Volume of Discharge', dates, volumeValues, 'Volume (m³)', 'rgba(153, 102, 255, 1)');
-}
-
-// Function to create a line chart using Chart.js
-function createLineChart(title, labels, data, yAxisLabel, color) {
-    const ctx = document.createElement('canvas');
-    document.getElementById('chartsContainer').appendChild(ctx);
-
+function createLineChart(chartId, labels, data, title, xAxisLabel, yAxisLabel) {
+    const ctx = document.getElementById(chartId).getContext('2d');
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -80,9 +66,9 @@ function createLineChart(title, labels, data, yAxisLabel, color) {
             datasets: [{
                 label: yAxisLabel,
                 data: data,
-                borderColor: color,
-                backgroundColor: color,
-                fill: false
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
             }]
         },
         options: {
@@ -95,14 +81,12 @@ function createLineChart(title, labels, data, yAxisLabel, color) {
             },
             scales: {
                 x: {
-                    display: true,
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: xAxisLabel
                     }
                 },
                 y: {
-                    display: true,
                     title: {
                         display: true,
                         text: yAxisLabel
@@ -113,11 +97,8 @@ function createLineChart(title, labels, data, yAxisLabel, color) {
     });
 }
 
-// Function to create a bar chart using Chart.js
-function createBarChart(title, labels, data, yAxisLabel, color) {
-    const ctx = document.createElement('canvas');
-    document.getElementById('chartsContainer').appendChild(ctx);
-
+function createBarChart(chartId, labels, data, title, xAxisLabel, yAxisLabel) {
+    const ctx = document.getElementById(chartId).getContext('2d');
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -125,9 +106,7 @@ function createBarChart(title, labels, data, yAxisLabel, color) {
             datasets: [{
                 label: yAxisLabel,
                 data: data,
-                backgroundColor: color,
-                borderColor: color,
-                borderWidth: 1
+                backgroundColor: 'rgb(54, 162, 235)'
             }]
         },
         options: {
@@ -140,23 +119,19 @@ function createBarChart(title, labels, data, yAxisLabel, color) {
             },
             scales: {
                 x: {
-                    display: true,
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: xAxisLabel
                     }
                 },
                 y: {
-                    display: true,
                     title: {
                         display: true,
                         text: yAxisLabel
-                    }
+                    },
+                    beginAtZero: true
                 }
             }
         }
     });
 }
-
-// Call fetchData() to initiate data loading and chart creation
-fetchData();
