@@ -1,5 +1,5 @@
 // URL of the CSV file on GitHub
-const csvUrl = 'https://github.com/nazmihusin24590/water-dashboard/blob/main/Data.csv';
+const csvUrl = 'https://github.com/nazmihusin24590/nazmihusin24590.github.io/blob/main/Data.csv';
 
 // Function to fetch the CSV file and process the data
 async function fetchData() {
