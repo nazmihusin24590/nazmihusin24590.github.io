@@ -1,5 +1,15 @@
 // URL of the CSV file on GitHub
-const csvUrl = 'https://github.com/nazmihusin24590/nazmihusin24590.github.io/blob/main/Data.csv';
+const fetchData = async () => {
+    try {
+        const response = await fetch('Data.csv');
+        const data = await response.text();
+        console.log(data); // Display data in the console or process it further
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+
+fetchData();
 
 // Function to fetch the CSV file and process the data
 async function fetchData() {
