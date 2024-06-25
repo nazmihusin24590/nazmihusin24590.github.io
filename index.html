@@ -12,10 +12,14 @@
     <h1>Water Quality Dashboard</h1>
 
     <div class="charts-container">
-        <canvas id="dateVsPHChart" width="400" height="300"></canvas>
-        <canvas id="dateVsCODChart" width="400" height="300"></canvas>
-        <canvas id="dateVsSSChart" width="400" height="300"></canvas>
-        <canvas id="dateVsDischargeChart" width="400" height="300"></canvas>
+        <div class="chart-row">
+            <canvas id="dateVsPHChart" class="chart" width="400" height="300"></canvas>
+            <canvas id="dateVsCODChart" class="chart" width="400" height="300"></canvas>
+        </div>
+        <div class="chart-row">
+            <canvas id="dateVsSSChart" class="chart" width="400" height="300"></canvas>
+            <canvas id="dateVsDischargeChart" class="chart" width="400" height="300"></canvas>
+        </div>
     </div>
 </body>
 </html>
