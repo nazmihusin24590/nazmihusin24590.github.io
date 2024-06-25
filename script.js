@@ -9,7 +9,6 @@ const fetchData = async () => {
     }
 };
 
-fetchData();
 
 // Function to fetch the CSV file and process the data
 async function fetchData() {
