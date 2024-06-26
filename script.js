@@ -44,7 +44,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createLineChart(chartId, labels, data, chartLabel, xAxisLabel, yAxisLabel) {
-        var ctx = document.getElementById(chartId).getContext('2d');
+        var canvas = document.getElementById(chartId);
+        if (!canvas) {
+            console.error('Canvas element with ID ' + chartId + ' not found.');
+            return;
+        }
+        var ctx = canvas.getContext('2d');
+        if (!ctx) {
+            console.error('Failed to get 2D context for canvas ' + chartId);
+            return;
+        }
         new Chart(ctx, {
             type: 'line',
             data: {
@@ -77,7 +86,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createBarChart(chartId, labels, data, chartLabel, xAxisLabel, yAxisLabel) {
-        var ctx = document.getElementById(chartId).getContext('2d');
+        var canvas = document.getElementById(chartId);
+        if (!canvas) {
+            console.error('Canvas element with ID ' + chartId + ' not found.');
+            return;
+        }
+        var ctx = canvas.getContext('2d');
+        if (!ctx) {
+            console.error('Failed to get 2D context for canvas ' + chartId);
+            return;
+        }
         new Chart(ctx, {
             type: 'bar',
             data: {
