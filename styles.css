@@ -18,6 +18,11 @@ h1 {
     flex-direction: column;
 }
 
+iframe{
+    width: 80%;
+    height: 500px;
+}
+
 .charts-container {
     display: flex;
     flex-wrap: wrap;
