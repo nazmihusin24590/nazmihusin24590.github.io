@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetchData(); // Call fetchData() when DOM is fully loaded
+    fetchData();
 
     function fetchData() {
         fetch('Data.csv')
@@ -13,54 +13,99 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function processData(data) {
-        // Process CSV data here and create charts using Chart.js or other libraries
-        // Example:
-        // - Parse CSV data
-        // - Create Chart.js instances for each chart type (pH, COD, SS, Volume)
+        // Split the CSV data into rows
+        const rows = data.trim().split('\n');
+        const headers = rows[0].split(',');
 
-        // Example chart creation with Chart.js:
-        var ctx1 = document.getElementById('pHChart').getContext('2d');
-        var pHChart = new Chart(ctx1, {
+        // Initialize arrays to store data
+        let dates = [];
+        let pHValues = [];
+        let codValues = [];
+        let ssValues = [];
+        let dischargeValues = [];
+
+        // Iterate through rows (starting from index 1, assuming index 0 is header)
+        for (let i = 1; i < rows.length; i++) {
+            const rowData = rows[i].split(',');
+            dates.push(rowData[0]); // Assuming date is the first column
+
+            // Assuming pH, COD, SS, and Volume of discharge are the next columns respectively
+            pHValues.push(parseFloat(rowData[1]));
+            codValues.push(parseFloat(rowData[2]));
+            ssValues.push(parseFloat(rowData[3]));
+            dischargeValues.push(parseFloat(rowData[4]));
+        }
+
+        // Call functions to create each chart
+        createLineChart('dateVsPHChart', dates, pHValues, 'Date vs pH', 'Date', 'pH');
+        createLineChart('dateVsCODChart', dates, codValues, 'Date vs COD', 'Date', 'COD');
+        createLineChart('dateVsSSChart', dates, ssValues, 'Date vs SS', 'Date', 'SS');
+        createBarChart('dateVsDischargeChart', dates, dischargeValues, 'Date vs Discharge Volume', 'Date', 'Volume (m3)');
+    }
+
+    function createLineChart(chartId, labels, data, chartLabel, xAxisLabel, yAxisLabel) {
+        var ctx = document.getElementById(chartId).getContext('2d');
+        new Chart(ctx, {
             type: 'line',
             data: {
-                // Chart data here
+                labels: labels,
+                datasets: [{
+                    label: chartLabel,
+                    data: data,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
             },
             options: {
-                // Chart options here
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: xAxisLabel
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: yAxisLabel
+                        }
+                    }
+                }
             }
         });
+    }
 
-        var ctx2 = document.getElementById('CODChart').getContext('2d');
-        var CODChart = new Chart(ctx2, {
-            type: 'line',
-            data: {
-                // Chart data here
-            },
-            options: {
-                // Chart options here
-            }
-        });
-
-        // Repeat for SSChart and VolumeChart
-        var ctx3 = document.getElementById('SSChart').getContext('2d');
-        var SSChart = new Chart(ctx3, {
-            type: 'line',
-            data: {
-                // Chart data here
-            },
-            options: {
-                // Chart options here
-            }
-        });
-
-        var ctx4 = document.getElementById('VolumeChart').getContext('2d');
-        var VolumeChart = new Chart(ctx4, {
+    function createBarChart(chartId, labels, data, chartLabel, xAxisLabel, yAxisLabel) {
+        var ctx = document.getElementById(chartId).getContext('2d');
+        new Chart(ctx, {
             type: 'bar',
             data: {
-                // Chart data here
+                labels: labels,
+                datasets: [{
+                    label: chartLabel,
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
             },
             options: {
-                // Chart options here
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: xAxisLabel
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: yAxisLabel
+                        },
+                        beginAtZero: true
+                    }
+                }
             }
         });
     }
