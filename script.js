@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text();
             })
             .then(data => {
+                console.log('Data fetched successfully:', data); // Debug
                 processData(data);
             })
             .catch(error => {
@@ -35,12 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const rowData = rows[i].split(',');
                 dates.push(rowData[0]); // Assuming date is the first column
 
-                // Assuming pH, COD, SS, and Volume of discharge are the next columns respectively
                 pHValues.push(parseFloat(rowData[1]));
                 codValues.push(parseFloat(rowData[2]));
                 ssValues.push(parseFloat(rowData[3]));
                 dischargeValues.push(parseFloat(rowData[4]));
             }
+
+            console.log('Data processed:', { dates, pHValues, codValues, ssValues, dischargeValues }); // Debug
 
             createLineChart('dateVsPHChart', dates, pHValues, 'Date vs pH', 'Date', 'pH');
             createLineChart('dateVsCODChart', dates, codValues, 'Date vs COD', 'Date', 'COD');
@@ -76,6 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     x: {
                         title: {
@@ -92,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+        console.log('Line chart created for', chartId); // Debug
     }
 
     function createBarChart(chartId, labels, data, chartLabel, xAxisLabel, yAxisLabel) {
@@ -118,6 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     x: {
                         title: {
@@ -135,5 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+        console.log('Bar chart created for', chartId); // Debug
     }
 });
