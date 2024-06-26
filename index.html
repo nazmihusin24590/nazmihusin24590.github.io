@@ -17,6 +17,7 @@
 .chart-title {
     text-align: center;
     font-size: 28px; /* Increased font size */
+    font-weight: bold; /* Make it bold */
     margin: 10px 0;
 }
 
@@ -30,6 +31,11 @@
     flex-direction: column;
 }
 
+.location-title {
+            font-size: 24px; /* Adjusted font size */
+            margin-bottom: 10px; /* Added spacing below the header */
+}
+
 .chart-container {
     margin-bottom: 20px;
 }
@@ -40,7 +46,7 @@
     <div class="dashboard-container">
         <div class="chart-title">SL Container Terminal Sdn. Bhd. Discharge Water Quality</div>
         <div class="container">
-            <h1>Location Map</h1>
+            <h2 class="location-title">Location Map</h2> <!-- Changed h1 to h2 and added location-title class -->
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63816.09500300653!2d103.88844673273273!3d1.4696137827961913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da3fe2c37eb7d3%3A0x36d4d4f64105dbc0!2sSL%20Container%20Terminal%20Sdn.%20Bhd.!5e0!3m2!1sen!2smy!4v1719373352575!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>   
         <div class="chart-container">
