@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SL Container Terminal Sdn Bhd Discharge Water Quality</title>
+    <title>Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-title {
+            text-align: center;
+            font-size: 28px; /* Increased font size */
+            font-family: Arial, sans-serif; /* Changed font to Arial */
+            font-weight: bold; /* Make it bold */
+            margin: 20px 0;
+        }
+        .chart-container {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="chart-title">SL Container Terminal Sdn. Bhd. Discharge Water Quality</div>
-    <div>
+    <div class="chart-container">
         <canvas id="dateVsPHChart" width="400" height="200"></canvas>
     </div>
-    <div>
+    <div class="chart-container">
         <canvas id="dateVsCODChart" width="400" height="200"></canvas>
     </div>
-    <div>
+    <div class="chart-container">
         <canvas id="dateVsSSChart" width="400" height="200"></canvas>
     </div>
-    <div>
+    <div class="chart-container">
         <canvas id="dateVsDischargeChart" width="400" height="200"></canvas>
     </div>
     <script src="script.js"></script>
