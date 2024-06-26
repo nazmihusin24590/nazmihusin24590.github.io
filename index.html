@@ -13,50 +13,6 @@
     background-color: #f0f0f0; /* Set a background color for the body */
     overflow-x: hidden; /* Ensure no horizontal scrolling */
     position: relative; /* Ensure relative positioning for absolute elements */
-}
-
-.dashboard-container {
-    position: relative; /* Ensure relative positioning for absolute elements */
-    z-index: 1; /* Ensure the dashboard content appears above the background */
-    background-color: rgba(255, 255, 255, 0.9); /* Light background to improve contrast */
-    padding: 20px; /* Add padding for spacing */
-    border-radius: 8px; /* Add border radius for rounded corners */
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-}
-
-.background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0; /* Ensure the background is behind other content */
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16);
-    will-change: transform;
-}
-
-.background iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-.attribution {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    z-index: 2; /* Ensure attribution is above the background */
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 5px 10px;
-    border-radius: 5px;
-}
 
 .chart-title {
     text-align: center;
@@ -69,6 +25,7 @@
     width: 100%;
     height: 50vh;
     display: flex;
+    font-size: 18px; /* Increased font size */
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -81,12 +38,6 @@
     </style>
 </head>
 <body>
-    <!-- Background Canva Embed -->
-    <div class="background">
-        <iframe loading="lazy" src="https://www.canva.com/design/DAGJODbJp3A/05QQM0fMQkSogS6WqFv_sA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-        </iframe>
-    </div>
-
     <div class="dashboard-container">
         <div class="chart-title">SL Container Terminal Sdn. Bhd. Discharge Water Quality</div>
         <div class="container">
@@ -105,13 +56,6 @@
         <div class="chart-container">
             <canvas id="dateVsDischargeChart" width="320" height="200"></canvas>
         </div>
-    </div>
-
-    <!-- Attribution -->
-    <div class="attribution">
-        <a href="https://www.canva.com/design/DAGJODbJp3A/05QQM0fMQkSogS6WqFv_sA/view?utm_content=DAGJODbJp3A&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link"
-            target="_blank" rel="noopener">Design</a> by Nazmi Husin
-    </div>
 
     <script src="script.js"></script>
 </body>
