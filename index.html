@@ -3,55 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>SL Container Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-            .container{
-                width: 100%;
-                height: 50vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-                font-family: Poppins, sans-serif; /* Changed font to Poppins */
-                
-            }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0; /* Set a background color for the body */
+            overflow-x: hidden; /* Ensure no horizontal scrolling */
+            position: relative; /* Ensure relative positioning for absolute elements */
+        }
 
-            iframe{
-                width: 80%;
-                height: 250px;
-            }
+        .dashboard-container {
+            position: relative; /* Ensure relative positioning for absolute elements */
+            z-index: 1; /* Ensure the dashboard content appears above the background */
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Ensure the background is behind other content */
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16);
+            will-change: transform;
+        }
+
+        .background iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .attribution {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 2; /* Ensure attribution is above the background */
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
 
         .chart-title {
             text-align: center;
             font-size: 28px; /* Increased font size */
-            font-family: Poppins, sans-serif; /* Changed font to Poppins */
             font-weight: bold; /* Make it bold */
             margin: 10px 0;
         }
+
+        .container {
+            width: 100%;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
         .chart-container {
             margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="chart-title">SL Container Terminal Sdn. Bhd. Discharge Water Quality</div>
-    <div class="container">
-        <h1>Location Map</h1>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63816.09500300653!2d103.88844673273273!3d1.4696137827961913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da3fe2c37eb7d3%3A0x36d4d4f64105dbc0!2sSL%20Container%20Terminal%20Sdn.%20Bhd.!5e0!3m2!1sen!2smy!4v1719373352575!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-     </div>   
-    <div class="chart-container">
-        <canvas id="dateVsPHChart" width="320" height="200"></canvas>
+    <!-- Background Canva Embed -->
+    <div class="background">
+        <iframe loading="lazy" src="https://www.canva.com/design/DAGJODbJp3A/05QQM0fMQkSogS6WqFv_sA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+        </iframe>
     </div>
-    <div class="chart-container">
-        <canvas id="dateVsCODChart" width="320" height="200"></canvas>
+
+    <div class="dashboard-container">
+        <div class="chart-title">SL Container Terminal Sdn. Bhd. Discharge Water Quality</div>
+        <div class="container">
+            <h1>Location Map</h1>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63816.09500300653!2d103.88844673273273!3d1.4696137827961913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da3fe2c37eb7d3%3A0x36d4d4f64105dbc0!2sSL%20Container%20Terminal%20Sdn.%20Bhd.!5e0!3m2!1sen!2smy!4v1719373352575!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>   
+        <div class="chart-container">
+            <canvas id="dateVsPHChart" width="320" height="200"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="dateVsCODChart" width="320" height="200"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="dateVsSSChart" width="320" height="200"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="dateVsDischargeChart" width="320" height="200"></canvas>
+        </div>
     </div>
-    <div class="chart-container">
-        <canvas id="dateVsSSChart" width="320" height="200"></canvas>
+
+    <!-- Attribution -->
+    <div class="attribution">
+        <a href="https://www.canva.com/design/DAGJODbJp3A/05QQM0fMQkSogS6WqFv_sA/view?utm_content=DAGJODbJp3A&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link"
+            target="_blank" rel="noopener">Design</a> by Nazmi Husin
     </div>
-    <div class="chart-container">
-        <canvas id="dateVsDischargeChart" width="320" height="200"></canvas>
-    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
